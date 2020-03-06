@@ -1,0 +1,14 @@
+﻿@model UserRoleViewModel
+
+    <h2>Verwijder gebruiker van rol: '@Model.Naam'</h2>
+
+<form asp-controller="Admin" asp-action="DeleteUserFromRole">
+    <input type="hidden" name="roleId" value="@Model.RoleId" />
+    <select asp-for="UserId"
+            asp-items="@(new SelectList(Model.Users, "Id", "Naam"))">
+        <option>Selecteer een gebruiker</option>
+    </select>
+    <input class="btn btn-primary" value="Verwijder van rol" type="submit" />
+</form>
+
+<a asp-action="RoleManagement" class="btn btn-primary">Gereed</a>

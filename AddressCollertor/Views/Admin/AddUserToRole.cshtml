@@ -1,0 +1,14 @@
+﻿@model UserRoleViewModel
+
+<h2>Voeg gebruiker toe aan rol: '@Model.Naam'</h2>
+
+<form asp-controller="Admin" asp-action="AddUserToRole">
+    <input type="hidden" name="roleId" value="@Model.RoleId" />
+    <select asp-for="UserId"
+            asp-items="@(new SelectList(Model.Users, "Id", "Naam"))">
+        <option>Selecteer een gerbuiker</option>
+    </select>
+    <input class="btn btn-primary" value="Voeg gebruiker toe aan rol" type="submit" />
+</form>
+
+<a asp-controller="Admin" asp-action="EditRole" class="btn btn-primary">Gereed</a>

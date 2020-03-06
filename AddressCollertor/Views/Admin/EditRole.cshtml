@@ -1,0 +1,46 @@
+﻿@model EditRoleViewModel
+
+<h2>Wijzig rol</h2>
+
+<form asp-controller="Admin" asp-action="EditRole" method="post" class="form-horizontal" role="form">
+    <h4>U kunt de onderstaande rolgegevens wijzigen</h4>
+    <hr />
+    <div asp-validation-summary="All" class="text-danger"></div>
+
+    @Html.HiddenFor(x => x.Id)
+    @*<div class="form-group">
+            <label asp-for="Id" class="col-md-2 control-label"></label>
+            <div class="col-md-10">
+                <input asp-for="Id" class="form-control" readonly="readonly" />
+                <span asp-validation-for="Id" class="text-danger"></span>
+            </div>
+        </div>*@
+
+    <div class="form-group">
+        <label asp-for="RoleName" class="col-md-2 control-label"></label>
+        <div class="col-md-10">
+            <input asp-for="RoleName" class="form-control" />
+            <span asp-validation-for="RoleName" class="text-danger"></span>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" class="btn btn-primary" value="Opslaan" />
+            <a asp-action="RoleManagement" class="btn btn-primary">Annuleren</a>
+        </div>
+    </div>
+</form>
+
+<h3>Gebruikers met deze rol</h3>
+<ul>
+    @foreach (var user in Model.Users)
+    {
+        <li>
+            @user
+        </li>
+    }
+</ul>
+
+<a asp-action="AddUserToRole" asp-route-roleId="@Model.Id" class="btn btn-primary">Voeg gebruikers toe aan rol</a>
+<a asp-action="DeleteUserFromRole" asp-route-roleId="@Model.Id" class="btn btn-primary">Verwijder gebruikers van rol</a>

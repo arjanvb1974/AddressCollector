@@ -1,0 +1,42 @@
+﻿@model AddressListViewModel
+
+<h2>Gebruikers beheer</h2>
+
+@if (!Model.Addresses.Any())
+{
+    <tr><td colspan="3" class="text-center">Geen adressen gevonden</td></tr><br /><br />
+}
+else
+{
+    <table class="table table-condensed table-bordered" header header-content="Adressen beheer">
+        <tr>
+            <th>Naam</th>
+            <th>Email</th>
+            @if (User.IsInRole("Administrator"))
+            {
+                <th>Rol</th>
+                <th>Ondernemer</th>
+            }
+            <th>Acties</th>
+        </tr>
+        @foreach (var address in Model.Addresses)
+        {
+            <tr>
+                <td>@address.Voornaam @address.Tussenvoegsel @address.Achternaan</td>
+                <td>@address.Straat @address.Huisnummer @address.HuisnummerToevoeging</td>
+                <td>@address.Postcode  @address.Plaats</td>
+                <td>@address.Land</td>
+                <td>
+                    <form asp-action="DeleteAddress" asp-route-userId="@address.Id" method="post">
+                        <a class="btn btn-sm btn-primary" asp-action="EditAddres" asp-route-id="@address.Id">Wijzigen</a>
+                        <button type="submit" onclick="return confirm('Weet u zeker dat u deze gebruiker wilt verwijderen?');" class="btn btn-sm btn-danger">
+                            Verwijderen
+                        </button>
+                    </form>
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<a class="btn btn-primary" asp-action="AddUser">Voeg nieuwe gebruiker toe</a>
