@@ -1,0 +1,28 @@
+﻿@model AddressViewModel
+
+<h2>Voer nieuw adres in</h2>
+
+<form asp-controller="Address" asp-action="AddNewAddress" method="post" class="form-horizontal" role="form">
+    <h4>Vul hieronder de details in</h4>
+    <hr />
+    
+    @Html.HiddenFor(x => x.KlantId)
+    @Html.HiddenFor(x => x.OnderNemerId)
+    @Html.HiddenFor(x => x.Next)
+
+    <partial name="_addressFields"/>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            @*<a asp-action="FirstAddress" class="btn btn-primary" title="Eerste"><<</a>*@
+            @*<a asp-action="PreviousAddress" class="btn btn-primary" title="Vorige"><</a>*@
+            <input type="submit" class="btn btn-primary" value="Opslaan" title="Opslaan" />
+            <input type="submit" class="btn btn-primary" id="SaveAndNext" value="Opslaan en volgende" title="Opslaan en volgende" />
+            @*<a asp-action="AddNewAddress"  class="btn btn-primary" title="Volgende">Opslaan en volgende</a>*@
+            @*<a asp-action="NextAddress" class="btn btn-primary" title="Volgende">></a>*@
+            @*<a asp-action="LastAddress" class="btn btn-primary" title="Laatste">>></a>*@
+            <a asp-action="AddressManagement" class="btn btn-primary">Annuleren</a>
+        </div>
+    </div>
+</form>
+
