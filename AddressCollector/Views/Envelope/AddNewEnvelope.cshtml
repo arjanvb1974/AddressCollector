@@ -1,0 +1,20 @@
+﻿@model EnvelopeViewModel
+
+<h2>Voer nieuwe envelop in</h2>
+
+<form asp-controller="Envelope" asp-action="AddNewEnvelope" method="post" class="form-horizontal" role="form">
+    <h4>Vul hieronder de details in</h4>
+    <hr />
+    
+    @Html.HiddenFor(x => x.OndernemerId)
+    
+    <partial name="_envelopeFields"/>
+
+    <div class="form-group">
+        <div class="col-md-10">
+            <input type="submit" class="btn btn-primary" value="Opslaan" title="Opslaan" />
+            <a asp-action="EnvelopeManagement" class="btn btn-primary">Annuleren</a>
+        </div>
+    </div>
+</form>
+

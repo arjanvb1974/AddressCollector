@@ -1,0 +1,50 @@
+﻿@using Microsoft.AspNetCore.Mvc.Rendering;
+@model EnvelopeViewModel
+
+@Html.HiddenFor(x => x.CreateDate)
+@Html.HiddenFor(x => x.LastUpdateDate)
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="form-group">
+            <label asp-for="Naam" class="col-md-2 control-label no-padding-left"></label>
+            <input asp-for="Naam" class="form-control" placeholder="Naam" autocomplete="off" />
+            <span asp-validation-for="Naam" class="text-danger"></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="Lengte" class="control-label no-padding-left"></label>
+            <input asp-for="Lengte" class="form-control" placeholder="Hoogte" autocomplete="off"/>
+            <span asp-validation-for="Naam" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="Breedte" class="control-label no-padding-left"></label>
+            <input asp-for="Breedte" class="form-control" placeholder="Breedte" autocomplete="off"/>
+            <span asp-validation-for="Breedte" class="text-danger"></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="OffsetLinks" class="control-label"></label>
+            <input asp-for="OffsetLinks" class="form-control" placeholder="Offset links" autocomplete="off"/>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="OffsetTop" class="control-label no-padding-left"></label>
+            <input asp-for="OffsetTop" class="form-control" placeholder="Offset boven" autocomplete="off"/>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    
+</script>

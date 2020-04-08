@@ -100,6 +100,7 @@ namespace AddressCollector.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Achternaan")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDate")
@@ -112,39 +113,103 @@ namespace AddressCollector.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KlantId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Land")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("LandId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OnderNemerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Plaats")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postcode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Straat")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tussenvoegsel")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Voornaam")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("KlantId");
 
+                    b.HasIndex("LandId");
+
                     b.HasIndex("OnderNemerId");
 
                     b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("AddressCollector.Data.Entities.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(2)")
+                        .HasMaxLength(2);
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Country");
+                });
+
+            modelBuilder.Entity("AddressCollector.Data.Entities.Envelope", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("Breedte")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Lengte")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Naam")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(500)");
+
+                    b.Property<int?>("OffsetLinks")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("OffsetTop")
+                        .HasColumnType("int");
+
+                    b.Property<string>("OnderNemerId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OnderNemerId");
+
+                    b.ToTable("Envelope");
                 });
 
             modelBuilder.Entity("AddressCollector.Data.Entities.PostalCode", b =>
@@ -323,11 +388,30 @@ namespace AddressCollector.Data.Migrations
                 {
                     b.HasOne("AddressCollector.Data.Auth.ApplicationUser", "Klant")
                         .WithMany()
-                        .HasForeignKey("KlantId");
+                        .HasForeignKey("KlantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AddressCollector.Data.Entities.Country", "Land")
+                        .WithMany()
+                        .HasForeignKey("LandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AddressCollector.Data.Auth.ApplicationUser", "Ondernemer")
                         .WithMany()
-                        .HasForeignKey("OnderNemerId");
+                        .HasForeignKey("OnderNemerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("AddressCollector.Data.Entities.Envelope", b =>
+                {
+                    b.HasOne("AddressCollector.Data.Auth.ApplicationUser", "Ondernemer")
+                        .WithMany()
+                        .HasForeignKey("OnderNemerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

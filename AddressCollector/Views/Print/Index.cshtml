@@ -1,0 +1,100 @@
+﻿@using AddressCollector.Shared
+@model PrintViewModel
+
+<h2>Print adressen</h2>
+
+@*@using (@Html.BeginForm("Index"))
+    {
+        <div class="col-md-4">
+            @Html.DropDownListFor(c => c.KlantId, new SelectList(@Model.Klanten, "Id", "Naam"), "-Selecteer-", new { @class = "form-control", onchange = "this.form.submit();" })
+        </div>
+        <br />
+        <br />
+        <div class="row">
+            @if (!Model.Klanten.Any())
+            {
+                <tr><td colspan="3" class="text-center">Geen klanten gevonden</td></tr>
+                <br />
+                <br />
+            }
+            else
+            {
+                <table class="table table-condensed table-bordered" header header-content="Klanten">
+                    <tr>
+                        <th style="width: 66%">Naam</th>
+                        <th>Adres</th>
+                        <th>Postcode</th>
+                        <th>Plaats</th>
+                        <th>Land</th>
+                        <th>Acties</th>
+                    </tr>
+                    @foreach (var klant in Model.Klanten.OrderBy(x => x.Naam))
+                    {
+                        <tr>
+                            <td>@klant.Naam</td>
+                            <td>
+                                <a class="btn btn-sm btn-primary" asp-action="PrintAddresses" asp-route-klantid="@klant.Id">Print alle adressen</a>
+                                <a href="@Url.Action("AddressManagementPerKlant", "Address", new {klantId = @klant.Id, fromPrint = "true"})" class="btn btn-sm btn-primary">Print enkel adres</a>
+                            </td>
+                        </tr>
+                    }
+                </table>
+            }
+
+
+            <a class="btn btn-primary" asp-action="PrintOrder">Print alle adressen van klant</a>
+        </div>
+
+    }*@
+@if (!Model.Klanten.Any())
+{
+    <tr><td colspan="3" class="text-center">Geen klanten gevonden</td></tr>
+    <br />
+    <br />
+}
+else
+{
+    <div class="col-md-4 no-padding-left">
+        @Html.DropDownListFor(c => c.EnvelopeId, new List<SelectListItem>(@ViewBag.Envelopes), "-Selecteer envelop-", new { @class = "form-control dropdown-format" })
+    </div>
+    <br />
+    <br />
+    <table class="table table-condensed table-bordered" header header-content="Klanten">
+        <tr>
+            <th style="width: 66%">Naam</th>
+            @*<th>Adres</th>
+                <th>Postcode</th>
+                <th>Plaats</th>
+                <th>Land</th>*@
+            <th>Acties</th>
+        </tr>
+        @foreach (var klant in Model.Klanten.OrderBy(x => x.Naam))
+        {
+            <tr>
+                <td>@klant.Naam</td>
+                <td>
+                    <a href="@Url.Action("PrintAddresses", "Print", new {klantId = @klant.Id, envelopeId = "001a"})" class="btn btn-sm btn-primary print">Print alle adressen</a>
+                    <a href="@Url.Action("AddressManagementPerKlant", "Address", new {klantId = @klant.Id, envelopeId = "001a", fromPrint = "true"})" class="btn btn-sm btn-primary print">Print enkel adres</a>
+                </td>
+            </tr>
+        }
+    </table>
+}
+<script type="text/javascript">
+    
+    $('.print').click(function(e) {
+
+        if ($('#EnvelopeId').val() === "") {
+            alert("Selecteer eerst een envelop.");
+            return false;
+        };
+
+        var envelopeId = $('#EnvelopeId').val();
+        var clickedCard = $(this);
+        var baseUrl = clickedCard.attr("href");
+
+        var newUrl = baseUrl.replace("001a", envelopeId);
+        window.location.href = newUrl;
+        return false;
+    });
+</script>

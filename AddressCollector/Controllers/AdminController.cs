@@ -51,7 +51,7 @@ namespace AddressCollector.Controllers
                 user.Rol = _userManager.GetRolesAsync(user).Result.FirstOrDefault();
             }
 
-            return View(users.OrderBy(x => x.OndernemerId));
+            return View(users.OrderBy(x => x.OndernemerId).ThenBy(x => x.Naam));
         }
 
         [Authorize(Roles="Administrator, Ondernemer")]

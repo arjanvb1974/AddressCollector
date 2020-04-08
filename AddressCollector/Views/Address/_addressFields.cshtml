@@ -1,149 +1,162 @@
-﻿@model AddressViewModel
+﻿@using AddressCollector.Data.DataContext
+@using AddressCollector.Data.Repositories
+@using AddressCollector.Data.Repositories.Interfaces
+@using AddressCollector.Helper
+@using Microsoft.EntityFrameworkCore
+@using Microsoft.Extensions.Caching.Memory
+@using Microsoft.AspNetCore.Mvc.Rendering;
+@model AddressViewModel
 
-    @Html.HiddenFor(x => x.CreateDate)
-    @Html.HiddenFor(x => x.LastUpdateDate)
+@Html.HiddenFor(x => x.CreateDate)
+@Html.HiddenFor(x => x.LastUpdateDate)
 
-    <div class="row">
-        <div class="col-md-2">
-            <div class="form-group">
-                <label asp-for="Voornaam" class="col-md-2 control-label no-padding-left"></label>
-                <input asp-for="Voornaam" class="form-control" placeholder="Voornaam" autocomplete="off"/>
-                <span asp-validation-for="Voornaam" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-md-1">
-            <div class="form-group">
-                <label asp-for="Tussenvoegsel" class="col-md-2 control-label no-padding-left"></label>
-                <input asp-for="Tussenvoegsel" class="form-control" placeholder="Tussenvoegsel" autocomplete="off"/>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="Achternaan" class="col-md-2 control-label no-padding-left"></label>
-                <input asp-for="Achternaan" class="form-control" placeholder="Achternaam" autocomplete="off"/>
-                <span asp-validation-for="Achternaan" class="text-danger"></span>
-            </div>
+<div class="row">
+    <div class="col-md-2">
+        <div class="form-group">
+            <label asp-for="Voornaam" class="col-md-2 control-label no-padding-left"></label>
+            <input asp-for="Voornaam" class="form-control" placeholder="Voornaam" autocomplete="off" />
+            <span asp-validation-for="Voornaam" class="text-danger"></span>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-3">
-            <div class="form-group">
-                <label asp-for="Postcode" class="col-md-2 control-label"></label>
-                <input asp-for="Postcode" class="form-control" placeholder="Postcode" autocomplete="off"/>
-                <span asp-validation-for="Postcode" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-md-1">
-            <div class="form-group">
-                <label asp-for="Huisnummer" class="col-md-2 control-label no-padding-left"></label>
-                <input asp-for="Huisnummer" class="form-control" placeholder="Huisnummer" autocomplete="off"/>
-                <span asp-validation-for="Huisnummer" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-md-1">
-            <div class="form-group">
-                <label asp-for="HuisnummerToevoeging" class="col-md-2 control-label no-padding-left"></label>
-                <input asp-for="HuisnummerToevoeging" class="form-control" placeholder="Toevoeging" autocomplete="off"/>
-            </div>
+    <div class="col-md-1">
+        <div class="form-group">
+            <label asp-for="Tussenvoegsel" class="col-md-2 control-label no-padding-left"></label>
+            <input asp-for="Tussenvoegsel" class="form-control" placeholder="Tussenvoegsel" autocomplete="off" />
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-5">
-            <div class="form-group">
-                <label asp-for="Straat" class="col-md-2 control-label no-padding-left"></label>
-                <input asp-for="Straat" class="form-control" placeholder="Straat" autocomplete="off"/>
-                <span asp-validation-for="Straat" class="text-danger"></span>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="Plaats" class="col-md-2 control-label"></label>
-                <input asp-for="Plaats" class="form-control" placeholder="Plaats" autocomplete="off"/>
-                <span asp-validation-for="Plaats" class="text-danger"></span>
-            </div>
-        </div>
-        </div>
-    <div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label asp-for="Land" class="col-md-2 control-label"></label>
-                <input asp-for="Land" class="form-control" placeholder="Land" autocomplete="off"/>
-                <span asp-validation-for="Land" class="text-danger"></span>
-            </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="Achternaan" class="col-md-2 control-label no-padding-left"></label>
+            <input asp-for="Achternaan" class="form-control" placeholder="Achternaam" autocomplete="off" />
+            <span asp-validation-for="Achternaan" class="text-danger"></span>
         </div>
     </div>
+</div>
+<div class="row">
+    <div class="col-md-3">
+        <div class="form-group">
+            <label asp-for="Postcode" class="col-md-2 control-label"></label>
+            <input asp-for="Postcode" class="form-control" placeholder="Postcode" autocomplete="off" />
+            <span asp-validation-for="Postcode" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="form-group">
+            <label asp-for="Huisnummer" class="col-md-2 control-label no-padding-left"></label>
+            <input asp-for="Huisnummer" class="form-control" placeholder="Huisnummer" autocomplete="off" />
+            <span asp-validation-for="Huisnummer" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-1">
+        <div class="form-group">
+            <label asp-for="HuisnummerToevoeging" class="col-md-2 control-label no-padding-left"></label>
+            <input asp-for="HuisnummerToevoeging" class="form-control" placeholder="Toevoeging" autocomplete="off" />
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-5">
+        <div class="form-group">
+            <label asp-for="Straat" class="col-md-2 control-label no-padding-left"></label>
+            <input asp-for="Straat" class="form-control" placeholder="Straat" autocomplete="off" />
+            <span asp-validation-for="Straat" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="form-group">
+            <label asp-for="Plaats" class="col-md-2 control-label"></label>
+            <input asp-for="Plaats" class="form-control" placeholder="Plaats" autocomplete="off" />
+            <span asp-validation-for="Plaats" class="text-danger"></span>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-4">
+        @*<div class="form-group">
+            <label asp-for="Land" class="col-md-2 control-label"></label>
+            <input asp-for="Land" class="form-control" placeholder="Land" autocomplete="off" />
+            <span asp-validation-for="Land" class="text-danger"></span>
+        </div>*@
+        <div class="form-group">
+            <label asp-for="Land" class="col-md-2 control-label"></label>
+            @Html.DropDownListFor(c => c.LandId, new List<SelectListItem>(@ViewBag.Landen), "-Selecteer-", new { @class = "form-control dropdown-format" })
+            @*<input asp-for="Land" class="form-control" placeholder="Land" autocomplete="off" />*@
+            <span asp-validation-for="LandId" class="text-danger"></span>
+        </div>
+    </div>
+</div>
 
 
-    
-    <script>
-        //$(function () {
-        //    $('#cancel').click(function () {
-        //        $('#dialognieuweorganisatie').dialog("close");
-        //    });
-        //});
 
-        function getofficialaddress(postcode, number) {
-            $.ajax({
-                url: window.location.origin + '/Address/GetOfficialAddress',
-                cache: false,
-                dataType: "json",
-                type: "GET",
-                data: { zipcode: postcode.replace(" ", ""), number: +number },
-                success: function (result) {
-                    if (result.city != null) {
-                        $("#Plaats").val(result.city);
-                        $("#Straat").val(result.street);
-                        //$("#plaats").val(result.city);
-                        //$("#straat").val(result.street);
-                        //$("#rowcity").show();
-                        //$("#rowstreet").show();
-                        $(".zip-error").hide();
-                        $('#save').prop('disabled', false);
-                    } else {
-                        $("#Plaats").val('');
-                        $("#Straat").val('');
-                        $(".zip-error").show();
-                        //$("#rowcity").hide();
-                        //$("#rowstreet").hide();
-                        $('#save').prop('disabled', true);
-                    }
-                },
-                error: function (result) {
-                    alert('Er is iets misgegaan. Probeer het later nogmaals.');
+<script>
+    //$(function () {
+    //    $('#cancel').click(function () {
+    //        $('#dialognieuweorganisatie').dialog("close");
+    //    });
+    //});
+
+    function getofficialaddress(postcode, number) {
+        $.ajax({
+            url: window.location.origin + '/Address/GetOfficialAddress',
+            cache: false,
+            dataType: "json",
+            type: "GET",
+            data: { zipcode: postcode.replace(" ", ""), number: +number },
+            success: function (result) {
+                if (result.city != null) {
+                    $("#Plaats").val(result.city);
+                    $("#Straat").val(result.street);
+                    //$("#plaats").val(result.city);
+                    //$("#straat").val(result.street);
+                    //$("#rowcity").show();
+                    //$("#rowstreet").show();
+                    $(".zip-error").hide();
+                    $('#save').prop('disabled', false);
+                } else {
+                    $("#Plaats").val('');
+                    $("#Straat").val('');
+                    $(".zip-error").show();
+                    //$("#rowcity").hide();
+                    //$("#rowstreet").hide();
+                    $('#save').prop('disabled', true);
                 }
-            });
+            },
+            error: function (result) {
+                alert('Er is iets misgegaan. Probeer het later nogmaals.');
+            }
+        });
+    }
+
+
+    $(document).ready(function () {
+        //$("#rowcity").hide();
+        //$("#rowstreet").hide();
+        //$("#plaats").prop('disabled', true);
+        //$("#straat").prop('disabled', true);
+
+        var zipcode = $("#Postcode").val().trim();
+        var number = $("#Huisnummer").val().trim();
+        if (zipcode.length > 0) {
+            getofficialaddress(zipcode, number);
         }
 
+        $("#Postcode").keyup(function () {
 
-        $(document).ready(function () {
-            //$("#rowcity").hide();
-            //$("#rowstreet").hide();
-            //$("#plaats").prop('disabled', true);
-            //$("#straat").prop('disabled', true);
-
-            var zipcode = $("#Postcode").val().trim();
-            var number = $("#Huisnummer").val().trim();
-            if (zipcode.length > 0) {
-                getofficialaddress(zipcode, number);
+            var el = $(this);
+            if ((el.val().length >= 6)) {
+                var number = $("#Huisnummer").val().trim();
+                getofficialaddress(el.val().trim(), number);
             }
-
-            $("#Postcode").keyup(function () {
-
-                var el = $(this);
-                if ((el.val().length >= 6)) {
-                    var number = $("#Huisnummer").val().trim();
-                    getofficialaddress(el.val().trim(), number);
-                }
-            });
-
-            $("#Huisnummer").keyup(function () {
-                var el = $(this);
-                var zip = $("#Postcode").val().trim();
-                getofficialaddress(zip, el.val().trim());
-            });
         });
 
-        $("#SaveAndNext").on("click", function () {
-            $('input[name=Next]').val('true');
+        $("#Huisnummer").keyup(function () {
+            var el = $(this);
+            var zip = $("#Postcode").val().trim();
+            getofficialaddress(zip, el.val().trim());
         });
-    </script>
+    });
+
+    $("#SaveAndNext").on("click", function () {
+        $('input[name=Next]').val('true');
+    });
+</script>

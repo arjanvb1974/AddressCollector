@@ -27,5 +27,7 @@ namespace AddressCollector.Data.Repositories.Interfaces
         bool Save();
 
         Address GetAddressById(int id);
+
+        IEnumerable<Address> GetAddressesByKlantId(string klantid);
     }
 }

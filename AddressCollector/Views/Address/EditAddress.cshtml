@@ -1,5 +1,5 @@
 ﻿@model AddressViewModel
-
+@using Microsoft.AspNetCore.Mvc.Rendering;
 <h2>Wijzig adres</h2>
 
 <form asp-controller="Address" asp-action="EditAddress" method="post" class="form-horizontal" role="form">
@@ -12,7 +12,7 @@
     <partial name="_addressFields" />
     
     <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
+        <div class="col-md-10">
             <input type="submit" class="btn btn-primary" value="Opslaan" />
             <a asp-action="AddressManagement" class="btn btn-primary">Annuleren</a>
         </div>

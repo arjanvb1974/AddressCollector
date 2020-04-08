@@ -5,3 +5,8 @@
 .navbar-nav {
     margin: 110px;
 }
+
+.navbar-toggle {
+    background-color: #c4bcba;
+}
+

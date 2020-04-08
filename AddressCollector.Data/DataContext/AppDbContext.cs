@@ -15,20 +15,17 @@ namespace AddressCollector.Data.DataContext
         {
             
         }
-        //public DbSet<Category> Categories { get; set; }
-        //public DbSet<Pie> Pies { get; set; }
-        //public DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
-        //public DbSet<Order> Orders { get; set; }
+        
         public DbSet<Address> Address { get; set; }
         public DbSet<PostalCode> PostalCode { get; set; }
+        public DbSet<Country> Country { get; set; }
+        public DbSet<Envelope> Envelope { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
 
             //fill db with data
-            
-
         }
 
         public override int SaveChanges()

@@ -2,6 +2,8 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using AddressCollector.Data.Auth;
+using AddressCollector.Data.Entities;
+using AddressCollector.Models;
 
 namespace AddressCollector.ViewModels
 {
@@ -29,8 +31,10 @@ namespace AddressCollector.ViewModels
         public string Postcode { get; set; }
         [Required(ErrorMessage = "De plaats is verplicht.")]
         public string Plaats { get; set; }
+        
         [Required(ErrorMessage = "Het land is verplicht.")]
-        public string Land { get; set; }
+        public int LandId { get; set; }
+        public virtual CountryViewModel Land { get; set; }
         [NotMapped]
         public bool Next { get; set; }
         public DateTime CreateDate { get; set; }

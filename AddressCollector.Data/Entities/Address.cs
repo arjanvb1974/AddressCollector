@@ -28,7 +28,7 @@ namespace AddressCollector.Data.Entities
         public string Postcode { get; set; }
         [Required]
         public string Plaats { get; set; }
-        [Required]
-        public string Land { get; set; }
+        public int LandId { get; set; }
+        public virtual Country Land { get; set; }
     }
 }

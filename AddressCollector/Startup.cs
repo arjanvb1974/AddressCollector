@@ -7,6 +7,7 @@ using AddressCollector.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
@@ -76,10 +77,20 @@ namespace AddressCollector
 
 
             services.AddScoped<IAddressRepository, AddressRepository>();
-            services.AddScoped<IPieRepository, PieRepository>();
-            services.AddScoped<IOrderRepository, OrderRepository>();
-            services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            services.AddScoped<ICountryRepository, CountryRepository>();
+            services.AddScoped<IEnvelopeRepository, EnvelopeRepository>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
             services.AddScoped<IEmailSender, Helper.EmailSender>();
+
+
+            
+            services.AddScoped<IPieRepository, PieRepository>();
+            
+
+            
+            //services.AddScoped<IOrderRepository, OrderRepository>();
+            //services.AddScoped<ShoppingCart>(sp => ShoppingCart.GetCart(sp));
+            
             //services.AddScoped<IMapper, Mapper>();
             
             services.AddHttpContextAccessor();

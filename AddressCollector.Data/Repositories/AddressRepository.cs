@@ -30,8 +30,7 @@ namespace AddressCollector.Data.Repositories
             }
             else if (user.IsInRole(Constants.OndernemerUserRole))
             {
-               var iets = _appDbContext.Address.Where(x => x.OnderNemerId == user.FindFirstValue(ClaimTypes.NameIdentifier));
-                return _appDbContext.Address.Where(x => x.OnderNemerId == user.FindFirstValue(ClaimTypes.NameIdentifier));
+               return _appDbContext.Address.Where(x => x.OnderNemerId == user.FindFirstValue(ClaimTypes.NameIdentifier));
             }
             else
             {
@@ -44,6 +43,10 @@ namespace AddressCollector.Data.Repositories
             return _appDbContext.Address.FirstOrDefault(x => x.Id == id);
         }
 
+        public IEnumerable<Address> GetAddressesByKlantId(string klantid)
+        {
+            return _appDbContext.Address.Where(x => x.KlantId == klantid);
+        }
 
        public PostalCode GetAddress(string zipcode, int? number)
        {

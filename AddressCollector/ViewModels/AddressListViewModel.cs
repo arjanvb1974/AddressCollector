@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using AddressCollector.Models;
 
 namespace AddressCollector.ViewModels
 {
@@ -10,5 +9,7 @@ namespace AddressCollector.ViewModels
             Addresses = new List<AddressViewModel>();
         }
         public List<AddressViewModel> Addresses { get; set; }
+        public bool FromPrint { get; set; }
+        public int EnvelopeId { get; set; }
     }
 }

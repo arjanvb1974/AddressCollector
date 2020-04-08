@@ -1,0 +1,50 @@
+﻿@using AddressCollector.Shared
+@model EnvelopeListViewModel
+
+<h2>Enveloppen beheer</h2>
+
+@if (!Model.Envelopes.Any())
+{
+    <tr><td colspan="3" class="text-center">Geen enveloppen gevonden</td></tr>
+    <br />
+    <br />
+}
+else
+{
+    <table class="table table-condensed table-bordered" header header-content="Enveloppen beheer">
+        <tr>
+            <th>Naam</th>
+            <th>Lengte</th>
+            <th>Breedte</th>
+            @if (User.IsInRole(Constants.AdminUserRole))
+            {
+                <th>Ondernemer</th>
+            }
+            <th>Acties</th>
+        </tr>
+        @foreach (var envelope in Model.Envelopes)
+        {
+            <tr>
+                <td>@envelope.Naam</td>
+                <td>@envelope.Lengte</td>
+                <td>@envelope.Breedte</td>
+                @if (User.IsInRole(Constants.AdminUserRole))
+                {
+                    <td>@envelope.Ondernemer.Naam</td>
+                }
+                <td>
+                    <form asp-action="DeleteEnvelope" asp-route-Id="@envelope.Id" method="post">
+                        <a class="btn btn-sm btn-primary" asp-action="EditEnvelope" asp-route-id="@envelope.Id">Wijzigen</a>
+                        <button type="submit" onclick="return confirm('Weet u zeker dat u deze envelop?');" class="btn btn-sm btn-danger">Verwijderen</button>
+                    </form>
+
+
+                </td>
+            </tr>
+        }
+    </table>
+}
+
+<a class="btn btn-primary" asp-action="AddNewEnvelope">Voeg nieuwe envelop toe</a>
+
+

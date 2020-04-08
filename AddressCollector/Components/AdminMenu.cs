@@ -11,13 +11,16 @@ namespace AddressCollector.Components
 
             if (User.IsInRole("Administrator") || User.IsInRole("Ondernemer"))
             {
-                var item = new AdminMenuItem() {DisplayValue = "Beheer gebruikers", ActionValue = "UserManagement"};
+                var item = new AdminMenuItem() {DisplayValue = "Beheer gebruikers", ActionValue = "UserManagement", ControllerValue = "Admin"};
+                menuItems.Add(item);
+
+                item = new AdminMenuItem() {DisplayValue = "Beheer enveloppen", ActionValue = "EnvelopeManagement", ControllerValue = "Envelope"};
                 menuItems.Add(item);
             }
             
             if (User.IsInRole("Administrator"))
             {
-                var item = new AdminMenuItem() {DisplayValue = "Beheer rollen", ActionValue = "RoleManagement"};
+                var item = new AdminMenuItem() {DisplayValue = "Beheer rollen", ActionValue = "RoleManagement", ControllerValue = "Admin"};
                 menuItems.Add(item);
             }
             
@@ -29,5 +32,6 @@ namespace AddressCollector.Components
     {
         public string DisplayValue { get; set; }
         public string ActionValue { get; set; }
+        public string ControllerValue { get; set; } 
     }
 }

@@ -166,4 +166,91 @@ footer {
     text-align: left !important;
 }
 
+.navbar-toggle {
+    background-color: #c4bcba;
+}
+
+.table-bordered {
+    min-height: 40px;
+}
+.table-headercell {
+    padding-top: 7px;
+    font-weight: bold;
+    
+}
+
+.table-cell {
+    padding-top: 7px;
+}
+
+.even {
+    background-color: #f9f9f9;
+}
+
+.clearspacer10 {
+    margin: 0px 0px 0px 0px;
+    display: block;
+    clear: both;
+    height: 10px;
+    min-height: 10px;
+}
+
+.clearspacer20 {
+    margin: 0px 0px 0px 0px;
+    display: block;
+    clear: both;
+    height: 20px;
+    min-height: 20px;
+}
+
+.clearspacer30 {
+    margin: 0px 0px 0px 0px;
+    display: block;
+    clear: both;
+    height: 30px;
+    min-height: 30px;
+}
+
+.clearspacer40 {
+    margin: 0px 0px 0px 0px;
+    display: block;
+    clear: both;
+    height: 40px;
+    min-height: 40px;
+}
+
+.clearspacer80 {
+    margin: 0px 0px 0px 0px;
+    display: block;
+    clear: both;
+    height: 80px;
+    min-height: 80px;
+}
+
+.clearspacer100 {
+    margin: 0px 0px 0px 0px;
+    display: block;
+    clear: both;
+    height: 100px;
+    min-height: 100px;
+}
+
+.row {
+    margin-left: 0px !important;
+    margin-right: 0px !important;
+}
+
+/*@media all and (max-width:767px)*/
+.navbar-inverse .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-inverse .navbar-nav .open .dropdown-menu > li > a:focus {
+    color: inherit;
+    background-color: transparent;
+}
+
+@media (max-width: 768px) {
+    .btn {
+        margin: 2px;
+    }
+}
+
+
 

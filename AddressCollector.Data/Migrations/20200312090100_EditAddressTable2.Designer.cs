@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AddressCollector.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20200310102602_AppUserEdited")]
-    partial class AppUserEdited
+    [Migration("20200312090100_EditAddressTable2")]
+    partial class EditAddressTable2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -102,6 +102,7 @@ namespace AddressCollector.Data.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Achternaan")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("CreateDate")
@@ -114,39 +115,69 @@ namespace AddressCollector.Data.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("KlantId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("Land")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<int>("LandId")
+                        .HasColumnType("int");
 
                     b.Property<DateTime>("LastUpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("OnderNemerId")
+                        .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("Plaats")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Postcode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Straat")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Tussenvoegsel")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Voornaam")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
                     b.HasIndex("KlantId");
 
+                    b.HasIndex("LandId");
+
                     b.HasIndex("OnderNemerId");
 
                     b.ToTable("Address");
+                });
+
+            modelBuilder.Entity("AddressCollector.Data.Entities.Country", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(2)")
+                        .HasMaxLength(2);
+
+                    b.Property<string>("CountryName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(100)")
+                        .HasMaxLength(100);
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Country");
                 });
 
             modelBuilder.Entity("AddressCollector.Data.Entities.PostalCode", b =>
@@ -325,11 +356,21 @@ namespace AddressCollector.Data.Migrations
                 {
                     b.HasOne("AddressCollector.Data.Auth.ApplicationUser", "Klant")
                         .WithMany()
-                        .HasForeignKey("KlantId");
+                        .HasForeignKey("KlantId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AddressCollector.Data.Entities.Country", "Land")
+                        .WithMany()
+                        .HasForeignKey("LandId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("AddressCollector.Data.Auth.ApplicationUser", "Ondernemer")
                         .WithMany()
-                        .HasForeignKey("OnderNemerId");
+                        .HasForeignKey("OnderNemerId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

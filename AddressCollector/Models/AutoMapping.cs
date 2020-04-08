@@ -12,10 +12,15 @@ namespace AddressCollector.Models
     {
         public AutoMapping()
         {
+            //db --> web
             CreateMap<Address, AddressViewModel>();
+            CreateMap<Country, CountryViewModel>();
+            CreateMap<Envelope, EnvelopeViewModel>();
 
-
+            //web --> db
             CreateMap<AddressViewModel, Address>();
+            CreateMap<CountryViewModel, Country>();
+            CreateMap<EnvelopeViewModel, Envelope>();
         }
     }
 }
