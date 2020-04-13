@@ -10,13 +10,13 @@
 }
 else
 {
-    
+
     //voor de rest
     <div class="hidden-xs">
         <div class="col-sm-12 table-bordered">
             <div class="col-sm-2 table-headercell">Naam</div>
-            <div class="col-sm-2 table-headercell">Adres</div>
-            <div class="col-sm-2 table-headercell">Postcode</div>
+            <div class="col-sm-3 table-headercell">Adres</div>
+            <div class="col-sm-1 table-headercell">Postcode</div>
             <div class="col-sm-2 table-headercell">Plaats</div>
             <div class="col-sm-2 table-headercell">Land</div>
             <div class="col-sm-2 table-headercell">Acties</div>
@@ -40,14 +40,15 @@ else
 
                 <div class="col-sm-12 table-bordered @oddOrEven">
                     <div class="col-sm-2 table-cell">@address.Voornaam @address.Tussenvoegsel @address.Achternaan</div>
-                    <div class="col-sm-2 table-cell">@address.Straat @address.Huisnummer @address.HuisnummerToevoeging</div>
-                    <div class="col-sm-2 table-cell">@address.Postcode</div>
+                    <div class="col-sm-3 table-cell">@address.Straat @address.Huisnummer @address.HuisnummerToevoeging</div>
+                    <div class="col-sm-1 table-cell">@address.Postcode</div>
                     <div class="col-sm-2 table-cell">@address.Plaats</div>
                     <div class="col-sm-2 table-cell">@address.Land.CountryName</div>
                     <div class="col-sm-2 table-cell">
                         @if (!Model.FromPrint)
                         {
-                            <form asp-action="DeleteAddress" asp-route-userId="@address.Id" method="post">
+
+                            <form asp-action="DeleteAddress" asp-route-Id="@address.Id" method="post">
                                 <a class="btn btn-sm btn-primary" asp-action="EditAddress" asp-route-id="@address.Id" title="Wijzigen"><span class="fa fa-edit"></span></a>
                                 <button type="submit" onclick="return confirm('Weet u zeker dat u dit adres wilt verwijderen?');" class="btn btn-sm btn-danger" title="Verwijderen"><span class="fa fa-trash"></span></button>
                             </form>
@@ -82,14 +83,14 @@ else
                 {
                     oddOrEven = "odd";
                 }
-                
+
                 <div class="col-xs-12 table-bordered @oddOrEven">
                     <div class="col-xs-4 table-cell">@address.Voornaam @address.Tussenvoegsel @address.Achternaan</div>
                     <div class="col-xs-4 table-cell">@address.Straat @address.Huisnummer @address.HuisnummerToevoeging <br /> @address.Postcode <br /> @address.Plaats <br /> @address.Land.CountryName</div>
                     <div class="col-xs-4 table-cell">
                         @if (!Model.FromPrint)
                         {
-                            <form asp-action="DeleteAddress" asp-route-userId="@address.Id" method="post">
+                            <form asp-action="DeleteAddress" asp-route-Id="@address.Id" method="post">
                                 <a class="btn btn-sm btn-primary" asp-action="EditAddress" asp-route-id="@address.Id" title="Wijzigen"><span class="fa fa-edit"></span></a><br />
                                 <button type="submit" onclick="return confirm('Weet u zeker dat u dit adres wilt verwijderen?');" class="btn btn-sm btn-danger" title="Verwijderen"><span class="fa fa-trash"></span></button>
                             </form>
@@ -108,7 +109,10 @@ else
 <div class="clearspacer10"></div>
 @if (!Model.FromPrint)
 {
-    <a class="btn btn-primary" asp-action="AddNewAddress">Voeg nieuw adres toe</a>
+    <div class="row">
+        <a class="btn btn-primary btn-mobile" asp-action="AddNewAddress">Voeg nieuw adres toe</a>
+    </div>
+
 }
 else
 {

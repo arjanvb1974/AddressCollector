@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Text;
 using AddressCollector.Data.Auth;
 using AddressCollector.Data.Entities;
 using AddressCollector.Data.Repositories.Interfaces;
+using AddressCollector.EmailService;
+using AddressCollector.EmailService.Interfaces;
 using AddressCollector.Models;
 using AddressCollector.Shared;
 using AddressCollector.ViewModels;
@@ -32,13 +35,15 @@ namespace AddressCollector.Controllers
         private readonly ICountryRepository _countryRepository;
         private readonly IMapper _mapper;
         private readonly UserManager<ApplicationUser> _userManager;
+        private readonly IEmailSender _emailSender;
         
-        public AddressController(IAddressRepository addressRepository, ICountryRepository countryRepository, IMapper mapper, UserManager<ApplicationUser> userManager)
+        public AddressController(IAddressRepository addressRepository, ICountryRepository countryRepository, IMapper mapper, UserManager<ApplicationUser> userManager, IEmailSender emailSender)
         {
             _addressRepository = addressRepository;
             _countryRepository = countryRepository;
             _mapper = mapper;
             _userManager = userManager;
+            _emailSender = emailSender;
         }
         
         [Authorize(Roles="Administrator, Ondernemer, Klant")]
@@ -61,24 +66,25 @@ namespace AddressCollector.Controllers
         public IActionResult AddNewAddress()
         {
             var model = new AddressViewModel();
-            //set klant and ondernemerId
-            var user = _userManager.FindByNameAsync(User.Identity.Name);
-            if (user.Result != null)
-            {
-                model.KlantId = user.Result.Id;
-                model.OnderNemerId = user.Result.OndernemerId;
-                model.LandId = Constants.DefaultCountryNlId;
-            }
+            ////set klant and ondernemerId
+            FillModel(model);
+            //var user = _userManager.FindByNameAsync(User.Identity.Name);
+            //if (user.Result != null)
+            //{
+            //    model.KlantId = user.Result.Id;
+            //    model.OnderNemerId = user.Result.OndernemerId;
+            //    model.LandId = Constants.DefaultCountryNlId;
+            //}
 
-            ViewBag.Landen = _countryRepository.Countries
-                .OrderBy(c => c.CountryName)
-                .ToList()
-                .Select(c => new SelectListItem()
-                {
-                    Text = c.CountryName,
-                    Value = c.Id.ToString()
-                })
-                .ToList();
+            //ViewBag.Landen = _countryRepository.Countries
+            //    .OrderBy(c => c.CountryName)
+            //    .ToList()
+            //    .Select(c => new SelectListItem()
+            //    {
+            //        Text = c.CountryName,
+            //        Value = c.Id.ToString()
+            //    })
+            //    .ToList();
 
             return View(model);
         }
@@ -88,7 +94,11 @@ namespace AddressCollector.Controllers
         public IActionResult AddNewAddress(AddressViewModel model)
         {
             if (!ModelState.IsValid)
+            {
+                FillModel(model);
                 return View(model);
+                
+            }
             
             var address = _mapper.Map<Address>(model);
             _addressRepository.Add(address);
@@ -140,7 +150,9 @@ namespace AddressCollector.Controllers
         [Authorize(Roles="Administrator, Ondernemer, Klant")]
         public IActionResult DeleteAddress(int id)
         {
-           //doe hier de delete
+            //doe hier de delete
+            var address = _addressRepository.GetAddressById(id);
+            _addressRepository.Delete(address);
             return RedirectToAction("AddressManagement");
         }
 
@@ -324,6 +336,28 @@ namespace AddressCollector.Controllers
             return null;
         }
 
+        private AddressViewModel FillModel(AddressViewModel model)
+        {
+            //set klant and ondernemerId
+            var user = _userManager.FindByNameAsync(User.Identity.Name);
+            if (user.Result != null)
+            {
+                model.KlantId = user.Result.Id;
+                model.OnderNemerId = user.Result.OndernemerId;
+                model.LandId = Constants.DefaultCountryNlId;
+            }
+
+            ViewBag.Landen = _countryRepository.Countries
+                .OrderBy(c => c.CountryName)
+                .ToList()
+                .Select(c => new SelectListItem()
+                {
+                    Text = c.CountryName,
+                    Value = c.Id.ToString()
+                })
+                .ToList();
+            return model;
+        }
         
 
         

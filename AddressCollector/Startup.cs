@@ -3,6 +3,7 @@ using AddressCollector.Data.Auth;
 using AddressCollector.Data.DataContext;
 using AddressCollector.Data.Repositories;
 using AddressCollector.Data.Repositories.Interfaces;
+using AddressCollector.EmailService;
 using AddressCollector.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
@@ -81,10 +82,11 @@ namespace AddressCollector
             services.AddScoped<IEnvelopeRepository, EnvelopeRepository>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>(); 
             services.AddScoped<IEmailSender, Helper.EmailSender>();
+            services.AddScoped<EmailService.Interfaces.IEmailSender, EmailSender>();
 
 
             
-            services.AddScoped<IPieRepository, PieRepository>();
+            //services.AddScoped<IPieRepository, PieRepository>();
             
 
             
@@ -109,6 +111,10 @@ namespace AddressCollector
             IMapper mapper = mappingConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+            var emailConfig = Configuration
+                .GetSection("EmailConfiguration")
+                .Get<EmailConfiguration>();
+            services.AddSingleton(emailConfig);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

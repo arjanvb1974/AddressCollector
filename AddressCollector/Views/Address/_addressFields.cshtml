@@ -11,14 +11,14 @@
 @Html.HiddenFor(x => x.LastUpdateDate)
 
 <div class="row">
-    <div class="col-md-2">
+    <div class="col-md-3">
         <div class="form-group">
             <label asp-for="Voornaam" class="col-md-2 control-label no-padding-left"></label>
             <input asp-for="Voornaam" class="form-control" placeholder="Voornaam" autocomplete="off" />
             <span asp-validation-for="Voornaam" class="text-danger"></span>
         </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
         <div class="form-group">
             <label asp-for="Tussenvoegsel" class="col-md-2 control-label no-padding-left"></label>
             <input asp-for="Tussenvoegsel" class="form-control" placeholder="Tussenvoegsel" autocomplete="off" />
@@ -40,14 +40,21 @@
             <span asp-validation-for="Postcode" class="text-danger"></span>
         </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-2">
         <div class="form-group">
             <label asp-for="Huisnummer" class="col-md-2 control-label no-padding-left"></label>
-            <input asp-for="Huisnummer" class="form-control" placeholder="Huisnummer" autocomplete="off" />
+            @if (Model.Id > 0)
+            {
+                <input asp-for="Huisnummer" class="form-control" placeholder="Huisnummer" autocomplete="off" />
+            }
+            else
+            {
+                <input asp-for="Huisnummer" class="form-control" placeholder="Huisnummer" autocomplete="off" value="" />
+            }
             <span asp-validation-for="Huisnummer" class="text-danger"></span>
         </div>
     </div>
-    <div class="col-md-1">
+    <div class="col-md-4">
         <div class="form-group">
             <label asp-for="HuisnummerToevoeging" class="col-md-2 control-label no-padding-left"></label>
             <input asp-for="HuisnummerToevoeging" class="form-control" placeholder="Toevoeging" autocomplete="off" />
@@ -71,7 +78,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-4">
+    <div class="col-md-9">
         @*<div class="form-group">
             <label asp-for="Land" class="col-md-2 control-label"></label>
             <input asp-for="Land" class="form-control" placeholder="Land" autocomplete="off" />
@@ -113,12 +120,12 @@
                     $(".zip-error").hide();
                     $('#save').prop('disabled', false);
                 } else {
-                    $("#Plaats").val('');
-                    $("#Straat").val('');
-                    $(".zip-error").show();
+                    //$("#Plaats").val('');
+                    //$("#Straat").val('');
+                    //$(".zip-error").show();
                     //$("#rowcity").hide();
                     //$("#rowstreet").hide();
-                    $('#save').prop('disabled', true);
+                    //$('#save').prop('disabled', true);
                 }
             },
             error: function (result) {
@@ -156,7 +163,5 @@
         });
     });
 
-    $("#SaveAndNext").on("click", function () {
-        $('input[name=Next]').val('true');
-    });
+    
 </script>

@@ -12,9 +12,15 @@
     <partial name="_addressFields" />
     
     <div class="form-group">
-        <div class="col-md-10">
+        <div class="hidden-xs col-md-12">
             <input type="submit" class="btn btn-primary" value="Opslaan" />
             <a asp-action="AddressManagement" class="btn btn-primary">Annuleren</a>
+        </div>
+        <div class="visible-xs col-xs-12">
+            <input type="submit" class="btn btn-primary btn-mobile" value="Opslaan" />
+        </div>
+        <div class="visible-xs col-xs-12">
+            <a asp-action="AddressManagement" class="btn btn-primary btn-mobile">Annuleren</a>
         </div>
     </div>
 </form>

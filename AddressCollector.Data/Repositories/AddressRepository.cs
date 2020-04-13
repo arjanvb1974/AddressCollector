@@ -66,19 +66,10 @@ namespace AddressCollector.Data.Repositories
 
        public bool Delete(Address entity)
        {
-           //entity.IsDeleted = true;
 
-           //todo: complement
-           //remove username and email address, because these are unique
-           //foreach (var user in entity.Users)
-           //{
-           //    user.EmailAddress = "";
-           //    user.UserName = "";
-           //}
-
+           _appDbContext.Remove(entity);
            _appDbContext.SaveChanges();
-           //todo: deletion introduces a bug where parent relation is reset.
-           //_visData.Company.Remove(entity);
+           
            return true;
        }
 

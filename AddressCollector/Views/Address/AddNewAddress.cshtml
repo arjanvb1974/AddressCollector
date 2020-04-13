@@ -13,16 +13,28 @@
     <partial name="_addressFields"/>
 
     <div class="form-group">
-        <div class="col-md-10">
-            @*<a asp-action="FirstAddress" class="btn btn-primary" title="Eerste"><<</a>*@
-            @*<a asp-action="PreviousAddress" class="btn btn-primary" title="Vorige"><</a>*@
-            <input type="submit" class="btn btn-primary" value="Opslaan" title="Opslaan" />
-            <input type="submit" class="btn btn-primary" id="SaveAndNext" value="Opslaan en volgende" title="Opslaan en volgende" />
-            @*<a asp-action="AddNewAddress"  class="btn btn-primary" title="Volgende">Opslaan en volgende</a>*@
-            @*<a asp-action="NextAddress" class="btn btn-primary" title="Volgende">></a>*@
-            @*<a asp-action="LastAddress" class="btn btn-primary" title="Laatste">>></a>*@
+        <div class="hidden-xs col-md-12">
+            <input type="submit" class="btn btn-primary" id="Save" value="Opslaan" title="Opslaan" />
+            <input type="submit" class="btn btn-primary btn-mobile" id="SaveAndNext" value="Opslaan en volgende" title="Opslaan en volgende" />
             <a asp-action="AddressManagement" class="btn btn-primary">Annuleren</a>
+        </div>
+        <div class="visible-xs col-xs-12">
+            <input type="submit" class="btn btn-primary btn-mobile" id="Save" value="Opslaan" title="Opslaan" />
+        </div>
+        <div class="visible-xs col-xs-12">
+            <input type="submit" class="btn btn-primary btn-mobile" id="SaveAndNext" value="Opslaan en volgende" title="Opslaan en volgende" />
+        </div>
+        <div class="visible-xs col-xs-12">
+            <a asp-action="AddressManagement" class="btn btn-primary btn-mobile">Annuleren</a>
         </div>
     </div>
 </form>
+<script type="text/javascript">
+    $("#SaveAndNext").on("click", function () {
+        $('input[name=Next]').val('true');
+    });
+    $("#Save").on("click", function () {
+        $('input[name=Next]').val('false');
+    });
+</script>
 

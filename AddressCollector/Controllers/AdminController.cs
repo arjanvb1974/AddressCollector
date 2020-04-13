@@ -1,14 +1,18 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Text;
 using System.Threading.Tasks;
 using AddressCollector.Data.Auth;
+using AddressCollector.EmailService;
+using AddressCollector.EmailService.Interfaces;
 using AddressCollector.Helper;
 using AddressCollector.Shared;
 using AddressCollector.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using EmailSender = AddressCollector.EmailService.EmailSender;
 
 namespace AddressCollector.Controllers
 {
@@ -17,11 +21,13 @@ namespace AddressCollector.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly IEmailSender _emailSender;
 
-        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager, IEmailSender emailSender)
         {
             _userManager = userManager;
             _roleManager = roleManager;
+            _emailSender = emailSender;
         }
 
         // GET: /<controller>/
@@ -94,6 +100,12 @@ namespace AddressCollector.Controllers
                         //RedirectToAction("AddUserToRole", userRoleViewModel);
                         await AddUserToRol(userRoleViewModel);
                     }
+
+                    //also send email with username and password
+                    var bodyText = CreateBodyText(addUserViewModel);
+                    
+                    var message = new Message(new string[] {addUserViewModel.Email }, "Login gegevens Thijs Uitvaartzorg Adressentool", bodyText.ToString());
+                    _emailSender.SendEmail(message);
 
                 }
 
@@ -373,6 +385,37 @@ namespace AddressCollector.Controllers
             }
 
             return View(userRoleViewModel);
+        }
+
+        /// <summary>
+        /// send email with username and password
+        /// </summary>
+        /// <param name="addUserViewModel"></param>
+        /// <returns></returns>
+        private StringBuilder CreateBodyText(AddUserViewModel addUserViewModel)
+        {
+
+            var bodyText = new StringBuilder();
+            bodyText.AppendLine($"Beste {addUserViewModel.Naam},");
+            bodyText.AppendLine("");
+            bodyText.AppendLine("Bij deze onvangt u uw gebruikersnaam en wachtwoord om in te kunnen loggen in onze Adressentool.");
+            bodyText.AppendLine("Met deze tool vult u eenvoudig al uw adressen online in en zorg ik ervoor dat uw kaarten verstuurd worden." );
+            bodyText.AppendLine("");
+            bodyText.AppendLine("");
+            bodyText.AppendLine($"Gebruikersnaam: {addUserViewModel.Email}");
+            bodyText.AppendLine($"Wachtwoord: {addUserViewModel.Password}");
+            bodyText.AppendLine("");
+            bodyText.AppendLine("Wanneer u gebruikt maakt van onderstaande link komt u op de site en kunt u inloggen met bovenstaande gegevens.");
+            bodyText.AppendLine("");
+            bodyText.AppendLine("http://adressen.bitconsultancy.nl");
+            bodyText.AppendLine("");
+            bodyText.AppendLine("");
+            bodyText.AppendLine("Met vriendelijke groet,");
+            bodyText.AppendLine("");
+            bodyText.AppendLine("Patricia Thijs");
+            bodyText.AppendLine("Thijs Uitvaartzorg");
+
+            return bodyText;
         }
     }
 }

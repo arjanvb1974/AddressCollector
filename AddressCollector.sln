@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressCollector", "Address
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressCollector.Data", "AddressCollector.Data\AddressCollector.Data.csproj", "{964B36F2-9D62-4AD9-9E48-393A591B5C7B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressCollector.Shared", "AddressCollector.Shared\AddressCollector.Shared.csproj", "{531B0EF3-4A30-43E9-AB13-6F5E258A30C1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AddressCollector.Shared", "AddressCollector.Shared\AddressCollector.Shared.csproj", "{531B0EF3-4A30-43E9-AB13-6F5E258A30C1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AddressCollector.EmailService", "AddressCollector.EmailService\AddressCollector.EmailService.csproj", "{B22BB9C4-DE5D-4DB7-A693-477563EEE027}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{531B0EF3-4A30-43E9-AB13-6F5E258A30C1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{531B0EF3-4A30-43E9-AB13-6F5E258A30C1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{531B0EF3-4A30-43E9-AB13-6F5E258A30C1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B22BB9C4-DE5D-4DB7-A693-477563EEE027}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B22BB9C4-DE5D-4DB7-A693-477563EEE027}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B22BB9C4-DE5D-4DB7-A693-477563EEE027}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B22BB9C4-DE5D-4DB7-A693-477563EEE027}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

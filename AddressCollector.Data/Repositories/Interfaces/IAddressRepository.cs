@@ -13,6 +13,7 @@ namespace AddressCollector.Data.Repositories.Interfaces
 
         bool Update(Address entity);
 
+        bool Delete(Address entity);
         /// <summary>
         /// 
         /// </summary>
@@ -29,5 +30,7 @@ namespace AddressCollector.Data.Repositories.Interfaces
         Address GetAddressById(int id);
 
         IEnumerable<Address> GetAddressesByKlantId(string klantid);
+
+
     }
 }

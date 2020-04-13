@@ -31,50 +31,51 @@
 
 </head>
 <body>
-    <div class="container">
+<div class="container">
 
-        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-            <div class="container">
-                <div class="navbar-header">
-                    <button type="button" class="navbar-toggle test" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                    <ul class="nav navbar-nav">
-                        <li><a asp-controller="Home" asp-action="Index"><img class="img-responsive" alt="Thijs Uitvaartzorg" src="~/Images/Logo-Thijs-Uitvaartzorg.gif" /></a></li>
+    <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle test" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a asp-controller="Home" asp-action="Index"><img class="img-responsive" alt="Thijs Uitvaartzorg" src="~/Images/Logo-Thijs-Uitvaartzorg.gif" /></a></li>
 
-                        @if (SignInManager.IsSignedIn(User))
-                        {
-                            <li><a asp-controller="Home" asp-action="Index">Home</a></li>
-                            @await Component.InvokeAsync("AddressMenu")
+                    @if (SignInManager.IsSignedIn(User))
+                    {
+                        <li><a asp-controller="Home" asp-action="Index">Home</a></li>
+                        @await Component.InvokeAsync("AddressMenu")
                             @*@await Component.InvokeAsync("CategoryMenu")*@
                             @*<li><a asp-controller="Contact" asp-action="Index">Contact</a></li>*@
                             @*@await Component.InvokeAsync("ShoppingCartSummary")*@
-                        }
+                    }
 
-                        @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Administrator") || User.IsInRole("Ondernemer")))
-                        {
-                            <li><a asp-controller="Print" asp-action="Index">Uitvoer</a></li>
-                            @await Component.InvokeAsync("AdminMenu")
-                        }
+                    @if (SignInManager.IsSignedIn(User) && (User.IsInRole("Administrator") || User.IsInRole("Ondernemer")))
+                    {
+                        <li><a asp-controller="Print" asp-action="Index">Uitvoer</a></li>
+                        @await Component.InvokeAsync("AdminMenu")
+                    }
 
-                        @await Html.PartialAsync("_LoginPartial")
-                        @*<partial name="_LoginPartial" />*@
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-        <div class="row">
-            <div class="col-md-12">
-                @RenderBody()
+                    @await Html.PartialAsync("_LoginPartial")
+                    @*<partial name="_LoginPartial" />*@
+                </ul>
             </div>
         </div>
-        @RenderSection("Scripts", required: false)
+    </nav>
+
+    <div class="row">
+        <div class="col-md-12">
+            @RenderBody()
+        </div>
     </div>
+    @RenderSection("Scripts", required: false)
+</div>
 </body>
 </html>
+<footer></footer>

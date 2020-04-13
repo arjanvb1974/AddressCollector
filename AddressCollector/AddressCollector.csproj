@@ -30,6 +30,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\AddressCollector.Data\AddressCollector.Data.csproj" />
+    <ProjectReference Include="..\AddressCollector.EmailService\AddressCollector.EmailService.csproj" />
     <ProjectReference Include="..\AddressCollector.Shared\AddressCollector.Shared.csproj" />
   </ItemGroup>
 

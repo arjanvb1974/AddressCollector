@@ -10,11 +10,9 @@ namespace AddressCollector.Controllers
     [Authorize(Roles="Administrator, Ondernemer, Klant")]
     public class HomeController : Controller
     {
-        //private readonly IPieRepository _pieRepository;
-
-        public HomeController(IPieRepository pieRepository)
+        public HomeController()
         {
-            //_pieRepository = pieRepository;
+        
         }
 
         public IActionResult Index()
