@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Text;
 using AddressCollector.Data.Auth;
 using AddressCollector.Data.Entities;
@@ -109,17 +110,26 @@ namespace AddressCollector.Controllers
 
         
         [Authorize(Roles="Administrator, Ondernemer, Klant")]
-        public IActionResult AddressManagement()
+        public IActionResult AddressManagement(string id)
         {
             var model = new AddressListViewModel();
             model.Addresses = new List<AddressViewModel>();
-            model.Addresses = _mapper.Map<List<AddressViewModel>>(_addressRepository.AllAddresses(User).ToList());
+            if (string.IsNullOrEmpty(id))
+            {
+                model.Addresses = _mapper.Map<List<AddressViewModel>>(_addressRepository.AllAddresses(User).ToList());
+            }
+            else
+            {
+                model.Addresses = _mapper.Map<List<AddressViewModel>>(_addressRepository.AllAddresses(User).Where(x => x.KlantId == id).ToList());
+                model.KlantId = id;
+            }
+            
 
             if (!User.IsInRole("Klant"))
             {
                 foreach (var address in model.Addresses)
                 {
-                    //address.Klant = _mapper.Map<ApplicationUser>(_countryRepository.GetById(address.LandId));
+                    address.Klant = _userManager.Users.FirstOrDefault(x => x.Id == address.KlantId);
                 }
             }
 
@@ -127,6 +137,15 @@ namespace AddressCollector.Controllers
             {
                 address.Land = _mapper.Map<CountryViewModel>(_countryRepository.GetById(address.LandId));
             }
+
+            ViewBag.Klanten = _userManager.Users.Where(x => x.OndernemerId == User.FindFirstValue(ClaimTypes.NameIdentifier)).OrderBy(x => x.Naam).ToList()
+                .Select(c => new SelectListItem()
+                {
+                    Text = c.Naam,
+                    Value = c.Id.ToString()
+                })
+                .ToList();
+
             return View(model);
         }
 
@@ -197,47 +216,6 @@ namespace AddressCollector.Controllers
             var address = _addressRepository.GetAddress(zipcode, nr);
             return address == null ? Json(new { city = "", street = "" }) : Json(new { city = address.City, street = address.Street });
         }
-
-        [Authorize(Roles="Administrator, Ondernemer, Klant")]
-        [HttpPost]
-        public IActionResult FirstAddress(AddressViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-                
-            return View(model);
-        }
-
-        [Authorize(Roles="Administrator, Ondernemer, Klant")]
-        [HttpPost]
-        public IActionResult PreviousAddress(AddressViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-                
-            return View(model);
-        }
-
-        [Authorize(Roles="Administrator, Ondernemer, Klant")]
-        [HttpPost]
-        public IActionResult NextAddress(AddressViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-                
-            return View(model);
-        }
-
-        [Authorize(Roles="Administrator, Ondernemer, Klant")]
-        [HttpPost]
-        public IActionResult LastAddress(AddressViewModel model)
-        {
-            if (!ModelState.IsValid)
-                return View(model);
-                
-            return View(model);
-        }
-
         
         public IActionResult PrintOrder()
         {

@@ -299,12 +299,12 @@ namespace AddressCollector.Controllers
             //    gfx.DrawString(string.Concat(_countryRepository.GetById(address.LandId)), font, XBrushes.Black, new XRect(75, 200, page.Width, page.Height), XStringFormats.CenterLeft);
             //}
             //Draw the text
-            gfx.DrawString(string.Concat(address.Voornaam, address.Tussenvoegsel != null ? " " + address.Tussenvoegsel + " " : " ", address.Achternaan), font, XBrushes.Black, new XRect(150 + (envelope.OffsetTop ?? 0), 100 + (envelope.OffsetLinks ?? 0), page.Width, page.Height), XStringFormats.CenterLeft);
-            gfx.DrawString(string.Concat(address.Straat, " ", address.Huisnummer, " ", address.HuisnummerToevoeging), font, XBrushes.Black, new XRect(150 + (envelope.OffsetTop ?? 0), 120 + (envelope.OffsetLinks ?? 0), page.Width, page.Height), XStringFormats.CenterLeft);
-            gfx.DrawString(string.Concat(address.Postcode, "  ", address.Plaats), font, XBrushes.Black, new XRect(150 + (envelope.OffsetTop ?? 0), 140 + (envelope.OffsetLinks ?? 0), page.Width, page.Height), XStringFormats.CenterLeft);
+            gfx.DrawString(string.Concat(address.Voornaam, address.Tussenvoegsel != null ? " " + address.Tussenvoegsel + " " : " ", address.Achternaan), font, XBrushes.Black, new XRect(200 + (envelope.OffsetTop ?? 0), 20 + (envelope.OffsetLinks ?? 0), page.Width, page.Height), XStringFormats.CenterLeft);
+            gfx.DrawString(string.Concat(address.Straat, " ", address.Huisnummer, " ", address.HuisnummerToevoeging), font, XBrushes.Black, new XRect(200 + (envelope.OffsetTop ?? 0), 40 + (envelope.OffsetLinks ?? 0), page.Width, page.Height), XStringFormats.CenterLeft);
+            gfx.DrawString(string.Concat(address.Postcode, "  ", address.Plaats), font, XBrushes.Black, new XRect(200 + (envelope.OffsetTop ?? 0), 60 + (envelope.OffsetLinks ?? 0), page.Width, page.Height), XStringFormats.CenterLeft);
             if (address.LandId != Constants.DefaultCountryNlId)
             {
-                gfx.DrawString(string.Concat(_countryRepository.GetById(address.LandId)), font, XBrushes.Black, new XRect(150 + (envelope.OffsetTop ?? 0), 160 + (envelope.OffsetLinks ?? 0), page.Width, page.Height), XStringFormats.CenterLeft);
+                gfx.DrawString(string.Concat(_countryRepository.GetById(address.LandId)), font, XBrushes.Black, new XRect(200 + (envelope.OffsetTop ?? 0), 80 + (envelope.OffsetLinks ?? 0), page.Width, page.Height), XStringFormats.CenterLeft);
             }
         }
 
